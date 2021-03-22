@@ -1,0 +1,118 @@
+\documentclass[french, a4paper]{scrartcl}
+\usepackage[a4paper, left=1cm, top=1cm, right=1cm]{geometry}
+\usepackage{varwidth}
+\usepackage{tcolorbox}
+\usepackage{soul}
+
+\usepackage{csvsimple}
+
+\tcbuselibrary{skins}
+
+\begin{document}
+	\definecolor{darkRed}{RGB}{92, 7, 18}
+	
+	\newtcolorbox{srbox}[2][]
+	{
+		enhanced jigsaw,
+		frame style=
+		{
+			top color=darkRed,		% Dégradé de darkRed vers blanc
+			bottom color=white
+		},
+		% Corners
+		sharp corners,				% tous les angles sont droits
+		rounded corners=northwest,	% angle haut gauche est arrondit
+		arc is angular=nothwest,    % chanfrein angle haut gauche
+		arc=10pt,					% taille chanfrein
+		colback=white,
+		varwidth boxed title*=-12cm,
+		boxed title style=
+		{
+			colback=darkRed,
+			colframe=darkRed,
+			sharp corners,
+			rounded corners=northwest,
+			arc is angular=nothwest,
+			arc=16pt,
+			width=100pt,
+		},	% Pas de décoration sur le titre
+		attach boxed title to top right=	% Le titre est en haut a droite
+		{
+			yshift=-1pt
+		},
+		title={
+			\color{white}
+			\uppercase{\textbf{\null\hfill #2}}
+		}, #1
+	}
+	
+	\begin{srbox}{Attributes}
+		\begin{tabular}{l c c c c c c c c} \\		
+			\textbf{Attribute} & \textbf{Body} & \textbf{Agility} & \textbf{Reaction} & \textbf{Strength} & \textbf{Willpower} & \textbf{Logic} & \textbf{Intuition} & \textbf{Charisme} \\	
+			\csvreader
+			{smash.csv}{1=\AttributeType,2=\Body,3=\Agility,4=\Reaction,5=\Strength,6=\Willpower,7=\Logic,8=\Intuition,9=\Charisme}%
+			{
+				\AttributeType & \Body & \Agility & \Reaction & \Strength & \Willpower & \Logic & \Intuition & \Charisme \\
+			}
+		\end{tabular}	
+	\end{srbox}
+
+
+	\begin{srbox}{Skills}
+%		\tiny
+		\begin{tabular}{l l l l c c l} \\		
+			\textbf{Skills}     &     &   & \textbf{Attribut} &   & \textbf{Total} & \textbf{Rules (p. 93)} \\
+			\st{Astral}         &     & - & Intuition & 2 & -     & Untrained \\
+			Athletics           &     & 5 & Agility   & 7 & 12    & \\
+			\st{Biotech}        &     & - & Logic     & 1 & -     & Untrained \\			
+			Close Combat        &     & 6 & Agility   & 7 & 13    & \textbf{Close Combat}+\textbf{Agility} vs \textbf{Reaction}+\textbf{Intuition} \\
+			\multicolumn{1}{r}{\textit{Unarmed}}  & Exp & 9 & Agility   & 7 & 16    & \textbf{Edge} cost -1 for \textit{unarmed} \textbf{Close Combat} (Shark) \\
+			\multicolumn{1}{r}{\textit{Grappling}}& Exp & 9 & Agility   & 7 & 16    & \\
+			Con                 &     &   & Charisma  & 3 & 3     & \\
+			\st{Conjuring}      &     & - & Magic     & - & -     & Untrained \\			
+			\st{Cracking}       &     & - & Logic     & 1 & -     & Untrained \\			
+		    Electronics 		&	  & - &	Logic     & 1 & 1     & See quality \textbf{Incompetent} (Electronics) \\
+   			\st{Enchanting}     &     & - & Magic     & - & -     & Untrained \\			
+			Engineering 		&	  &   &	Logic     & 1 & 1     & \\
+			\st{Exotic Weapons} &     & - & Agility   & 7 & -     & Untrained \\			
+            Firearms  			&	  & 1 & Agility   & 7 & 8     & \textbf{Firearms}+\textbf{Agility} vs \textbf{Reaction}+\textbf{Intuition} \\
+            Influence 			&     & 1 &	Charisma  & 3 & 4     & \\
+			Outdoors 			&	  &   & Intuition & 2 & 2     & \\
+			Perception 			&     &   & Intuition & 2 & 2     & \\
+            Piloting         	&     & 1 &	Reaction  & 9 & 10    & \\
+			\st{Sorcery}        &     & - & Magic     & 0 & -     & Untrained \\			
+			Stealth  			&     & 1 &	Agility   & 7 & 8     & \\
+			\st{Tasking}    	&     & - &	Resonance & 0 & -     & Untrained \\
+			Knowledge 			&	  &   &           &   &       & Combat Underground \\	
+			Language            &     &   &           &   &       & Anglais \\	
+		\end{tabular}	
+	\end{srbox}
+
+%	\begin{srbox}{test}
+%	\begin{tabular}{l l} \\			
+%		Skills                           & Attribut \\
+%		\multicolumn{2}{c c}{aaaa & aaa} & dzeza    \\
+%		{2}{r r}{aaaa & exp} & Agility   \\
+%	\end{tabular}	
+%\end{srbox}
+
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
