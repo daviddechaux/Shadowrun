@@ -1,14 +1,27 @@
 \documentclass[french, a4paper]{scrartcl}
 \usepackage[a4paper, left=1cm, top=1cm, right=1cm]{geometry}
+\usepackage[utf8]{inputenc}
 \usepackage{varwidth}
 \usepackage{tcolorbox}
 \usepackage{soul}
 
+\usepackage{ifthen}
+
 \usepackage{csvsimple}
+\usepackage{datatool}
 
 \tcbuselibrary{skins}
 
+\DTLloaddb
+[
+	keys={Attribute,Body,Agility,Reaction,Strength,Willpower,Logic,Intuition,Charisme},
+%	headers={Attribute,Body,Agility,Reaction,Strength,Willpower,Logic,Intuition,Charisme}
+	noheader
+	]
+	{attr}{Attr.csv}
+
 \begin{document}
+
 	\definecolor{darkRed}{RGB}{92, 7, 18}
 	
 	\newtcolorbox{srbox}[2][]
@@ -45,21 +58,26 @@
 			\uppercase{\textbf{\null\hfill #2}}
 		}, #1
 	}
-	
+
+
 	\begin{srbox}{Attributes}
-		\begin{tabular}{l c c c c c c c c} \\		
-			\textbf{Attribute} & \textbf{Body} & \textbf{Agility} & \textbf{Reaction} & \textbf{Strength} & \textbf{Willpower} & \textbf{Logic} & \textbf{Intuition} & \textbf{Charisme} \\	
-			\csvreader
-			{smash.csv}{1=\AttributeType,2=\Body,3=\Agility,4=\Reaction,5=\Strength,6=\Willpower,7=\Logic,8=\Intuition,9=\Charisme}%
+						%Attribute Body Agility Reaction Strength Willpower Logic Intuition Charisme
+		\begin{tabular}{l          c    c       c        c        c         c     c         c } \\	
+			
+			\DTLforeach*
+			{attr}
 			{
-				\AttributeType & \Body & \Agility & \Reaction & \Strength & \Willpower & \Logic & \Intuition & \Charisme \\
+				\Attribute=Attribute, \Body=Body, \Agility=Agility, \Reaction=Reaction, \Strength=Strength, \Willpower=Willpower, \Logic=Logic, \Intuition=Intuition, \Charisme=Charisme %\\
+			}
+			{
+				\Attribute & \Body & \Agility & \Reaction & \Strength & \Willpower & \Logic & \Intuition & \Charisme \\
 			}
 		\end{tabular}	
 	\end{srbox}
 
-
+	
 	\begin{srbox}{Skills}
-%		\tiny
+		%		\tiny
 		\begin{tabular}{l l l l c c l} \\		
 			\textbf{Skills}     &     &   & \textbf{Attribut} &   & \textbf{Total} & \textbf{Rules (p. 93)} \\
 			\st{Astral}         &     & - & Intuition & 2 & -     & Untrained \\
@@ -71,15 +89,15 @@
 			Con                 &     &   & Charisma  & 3 & 3     & \\
 			\st{Conjuring}      &     & - & Magic     & - & -     & Untrained \\			
 			\st{Cracking}       &     & - & Logic     & 1 & -     & Untrained \\			
-		    Electronics 		&	  & - &	Logic     & 1 & 1     & See quality \textbf{Incompetent} (Electronics) \\
-   			\st{Enchanting}     &     & - & Magic     & - & -     & Untrained \\			
+			Electronics 		&	  & - &	Logic     & 1 & 1     & See quality \textbf{Incompetent} (Electronics) \\
+			\st{Enchanting}     &     & - & Magic     & - & -     & Untrained \\			
 			Engineering 		&	  &   &	Logic     & 1 & 1     & \\
 			\st{Exotic Weapons} &     & - & Agility   & 7 & -     & Untrained \\			
-            Firearms  			&	  & 1 & Agility   & 7 & 8     & \textbf{Firearms}+\textbf{Agility} vs \textbf{Reaction}+\textbf{Intuition} \\
-            Influence 			&     & 1 &	Charisma  & 3 & 4     & \\
+			Firearms  			&	  & 1 & Agility   & 7 & 8     & \textbf{Firearms}+\textbf{Agility} vs \textbf{Reaction}+\textbf{Intuition} \\
+			Influence 			&     & 1 &	Charisma  & 3 & 4     & \\
 			Outdoors 			&	  &   & Intuition & 2 & 2     & \\
 			Perception 			&     &   & Intuition & 2 & 2     & \\
-            Piloting         	&     & 1 &	Reaction  & 9 & 10    & \\
+			Piloting         	&     & 1 &	Reaction  & 9 & 10    & \\
 			\st{Sorcery}        &     & - & Magic     & 0 & -     & Untrained \\			
 			Stealth  			&     & 1 &	Agility   & 7 & 8     & \\
 			\st{Tasking}    	&     & - &	Resonance & 0 & -     & Untrained \\
@@ -87,16 +105,7 @@
 			Language            &     &   &           &   &       & Anglais \\	
 		\end{tabular}	
 	\end{srbox}
-
-%	\begin{srbox}{test}
-%	\begin{tabular}{l l} \\			
-%		Skills                           & Attribut \\
-%		\multicolumn{2}{c c}{aaaa & aaa} & dzeza    \\
-%		{2}{r r}{aaaa & exp} & Agility   \\
-%	\end{tabular}	
-%\end{srbox}
-
-
+	
 \end{document}
 
 
